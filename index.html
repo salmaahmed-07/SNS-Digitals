@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SNS Digital — Elegant Tech. Bespoke Solutions.</title>
+  <meta name="description" content="SNS Digital crafts bespoke digital experiences for brands that refuse to be ordinary. Web Development, E-Commerce, Brand Identity & Custom Software." />
+  <meta name="keywords" content="web development, software solutions, e-commerce, brand identity, SEO, bespoke digital agency" />
+  <meta property="og:title" content="SNS Digital — Elegant Tech. Bespoke Solutions." />
+  <meta property="og:description" content="Born at the intersection of elegance and engineering. We build digital empires." />
+  <meta property="og:type" content="website" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500;1,600&display=swap" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════
+       LOADING SCREEN
+  ═══════════════════════════════════════ -->
+  <div id="loader" class="loader">
+    <div class="loader__inner">
+      <svg class="loader__logo" viewBox="0 0 200 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="loader__path" d="M20 60 Q20 20 50 20 Q80 20 80 40 Q80 60 50 60 Q20 60 20 80" stroke="#C9A84C" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path class="loader__path" d="M90 20 L90 60 L130 60 L130 20" stroke="#C9A84C" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path class="loader__path" d="M90 40 L130 40" stroke="#C9A84C" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path class="loader__path" d="M150 60 Q150 20 180 20 Q210 20 210 40 Q210 60 180 60 Q150 60 150 80" stroke="#C9A84C" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </svg>
+      <p class="loader__text">SNS Digital</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       CUSTOM CURSOR
+  ═══════════════════════════════════════ -->
+  <div id="cursor" class="cursor"></div>
+  <div id="cursor-trail" class="cursor-trail"></div>
+
+  <!-- ═══════════════════════════════════════
+       NAVIGATION
+  ═══════════════════════════════════════ -->
+  <nav id="navbar" class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="navbar__logo">
+      <span class="navbar__monogram">SNS</span>
+    </div>
+    <ul class="navbar__links" id="navLinks">
+      <li><a href="#about" class="navbar__link" id="nav-about">About</a></li>
+      <li><a href="#services" class="navbar__link" id="nav-services">Services</a></li>
+      <li><a href="#work" class="navbar__link" id="nav-work">Work</a></li>
+      <li><a href="#process" class="navbar__link" id="nav-process">Process</a></li>
+      <li><a href="#contact" class="navbar__link" id="nav-contact">Contact Us</a></li>
+    </ul>
+    <a href="#contact" class="navbar__cta" id="nav-book">Book a Meeting</a>
+    <button class="navbar__hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Overlay -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <button class="mobile-menu__close" id="mobileClose" aria-label="Close menu">✕</button>
+    <ul class="mobile-menu__links">
+      <li><a href="#about" class="mobile-menu__link">About</a></li>
+      <li><a href="#services" class="mobile-menu__link">Services</a></li>
+      <li><a href="#work" class="mobile-menu__link">Work</a></li>
+      <li><a href="#process" class="mobile-menu__link">Process</a></li>
+      <li><a href="#contact" class="mobile-menu__link">Contact Us</a></li>
+      <li><a href="#contact" class="mobile-menu__cta">Book a Meeting</a></li>
+    </ul>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 1: HERO
+  ═══════════════════════════════════════ -->
+  <section id="hero" class="hero">
+    <canvas id="particleCanvas" class="hero__particles"></canvas>
+
+    <div class="hero__content">
+      <!-- Removed Logo above MacBook per user request -->
+
+      <!-- MacBook 3D Scene -->
+      <div class="macbook-scene" id="macbookScene">
+        <div class="macbook" id="macbook">
+          <!-- Lid -->
+          <div class="macbook__lid" id="macbookLid">
+            <div class="macbook__screen-bezel">
+              <div class="macbook__screen" id="macbookScreen">
+                <div class="macbook__screen-content" id="screenContent">
+                  <div class="screen-logo">SNS</div>
+                  <div class="screen-tagline">Elegant Tech. Bespoke Solutions.</div>
+                  <div class="screen-glow"></div>
+                </div>
+              </div>
+            </div>
+            <div class="macbook__lid-back">
+              <div class="macbook__apple-logo">SNS</div>
+            </div>
+          </div>
+          <!-- Base -->
+          <div class="macbook__base">
+            <div class="macbook__keyboard">
+              <div class="macbook__keys"></div>
+              <div class="macbook__touchpad"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Editorial Headline (behind MacBook, parallax) -->
+      <div class="hero__headline" id="heroHeadline">
+        <p class="hero__headline-small">WE BUILD</p>
+        <h1 class="hero__headline-big">DIGITAL EMPIRES</h1>
+      </div>
+    </div>
+
+    <div class="hero__scroll-hint" id="heroScrollHint">
+      <span>Scroll to explore</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 2: ABOUT
+  ═══════════════════════════════════════ -->
+  <section id="about" class="about reveal-section">
+    <div class="about__left">
+      <div class="about__number reveal-left">01</div>
+      <h2 class="about__heading reveal-left">We Are<br/><em>SNS Digital</em></h2>
+      <p class="about__body highlight-text reveal-left">
+        Born at the intersection of elegance and engineering, SNS Digital crafts bespoke digital experiences for brands that refuse to be ordinary. We don't build websites — we build <span class="underline-draw">legacies</span>.
+      </p>
+    </div>
+    <div class="about__right">
+      <div class="stats-grid">
+        <div class="stat-card reveal-right" data-count="120" data-suffix="+">
+          <div class="stat-card__number"><span class="count-up">0</span><span class="stat-suffix">+</span></div>
+          <div class="stat-card__label">Projects Delivered</div>
+        </div>
+        <div class="stat-card reveal-right" data-count="8" data-suffix="+">
+          <div class="stat-card__number"><span class="count-up">0</span><span class="stat-suffix">+</span></div>
+          <div class="stat-card__label">Years of Excellence</div>
+        </div>
+        <div class="stat-card reveal-right" data-count="40" data-suffix="+">
+          <div class="stat-card__number"><span class="count-up">0</span><span class="stat-suffix">+</span></div>
+          <div class="stat-card__label">Global Clients</div>
+        </div>
+        <div class="stat-card reveal-right" data-count="99" data-suffix="%">
+          <div class="stat-card__number"><span class="count-up">0</span><span class="stat-suffix">%</span></div>
+          <div class="stat-card__label">Client Retention</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 3: SERVICES
+  ═══════════════════════════════════════ -->
+  <section id="services" class="services reveal-section">
+    <div class="services__header">
+      <span class="eyebrow reveal-fade">What We Do</span>
+      <h2 class="services__heading reveal-fade">Our <span class="highlight-burst">Craft</span></h2>
+    </div>
+    <div class="services__carousel" id="servicesCarousel">
+      <div class="services__track" id="servicesTrack">
+
+        <article class="service-card tilt-card" id="service-1">
+          <div class="service-card__num">01</div>
+          <div class="service-card__icon">◈</div>
+          <h3 class="service-card__title">Web Design &amp; Development</h3>
+          <p class="service-card__desc">Pixel-perfect builds that feel alive</p>
+        </article>
+
+        <article class="service-card tilt-card" id="service-2">
+          <div class="service-card__num">02</div>
+          <div class="service-card__icon">◎</div>
+          <h3 class="service-card__title">E-Commerce Solutions</h3>
+          <p class="service-card__desc">Online stores engineered to convert</p>
+        </article>
+
+        <article class="service-card tilt-card" id="service-3">
+          <div class="service-card__num">03</div>
+          <div class="service-card__icon">◐</div>
+          <h3 class="service-card__title">Brand Identity Systems</h3>
+          <p class="service-card__desc">Visual languages that command attention</p>
+        </article>
+
+        <article class="service-card tilt-card" id="service-4">
+          <div class="service-card__num">04</div>
+          <div class="service-card__icon">◬</div>
+          <h3 class="service-card__title">Custom Software</h3>
+          <p class="service-card__desc">Bespoke tools built for your exact workflow</p>
+        </article>
+
+        <article class="service-card tilt-card" id="service-5">
+          <div class="service-card__num">05</div>
+          <div class="service-card__icon">◉</div>
+          <h3 class="service-card__title">SEO &amp; Performance</h3>
+          <p class="service-card__desc">Beautiful sites that Google loves too</p>
+        </article>
+
+        <article class="service-card tilt-card" id="service-6">
+          <div class="service-card__num">06</div>
+          <div class="service-card__icon">◈</div>
+          <h3 class="service-card__title">Maintenance &amp; Support</h3>
+          <p class="service-card__desc">We stay after the curtain call</p>
+        </article>
+
+      </div>
+    </div>
+    <div class="services__nav">
+      <button class="services__btn" id="servicesPrev" aria-label="Previous service">←</button>
+      <button class="services__btn" id="servicesNext" aria-label="Next service">→</button>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 4: PORTFOLIO
+  ═══════════════════════════════════════ -->
+  <section id="work" class="portfolio reveal-section">
+    <div class="portfolio__header">
+      <h2 class="portfolio__heading reveal-fade">Selected <span class="gold-text">Work</span></h2>
+      <div class="portfolio__rule"></div>
+    </div>
+
+    <div class="portfolio__grid">
+
+      <article class="portfolio-card portfolio-card--large reveal-left tilt-card" id="project-1" data-project="maison">
+        <div class="portfolio-card__img-wrap">
+          <img src="assets/portfolio_maison.png" alt="Maison Vérité luxury fashion brand website" class="portfolio-card__img" loading="lazy" />
+          <div class="portfolio-card__overlay">
+            <p class="portfolio-card__category">Luxury Fashion · E-Commerce</p>
+            <h3 class="portfolio-card__title">Maison Vérité</h3>
+            <a href="#" class="portfolio-card__cta" id="project-maison-cta">View Project →</a>
+          </div>
+        </div>
+      </article>
+
+      <div class="portfolio__col-right">
+        <article class="portfolio-card reveal-right tilt-card" id="project-2" data-project="arcane">
+          <div class="portfolio-card__img-wrap">
+            <img src="assets/portfolio_arcane.png" alt="Arcane Analytics SaaS dashboard platform" class="portfolio-card__img" loading="lazy" />
+            <div class="portfolio-card__overlay">
+              <p class="portfolio-card__category">SaaS · Dashboard</p>
+              <h3 class="portfolio-card__title">Arcane Analytics</h3>
+              <a href="#" class="portfolio-card__cta" id="project-arcane-cta">View Project →</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="portfolio-card reveal-right tilt-card" id="project-3" data-project="ivory">
+          <div class="portfolio-card__img-wrap">
+            <img src="assets/portfolio_ivory.png" alt="The Ivory Tower Hotel boutique booking site" class="portfolio-card__img" loading="lazy" />
+            <div class="portfolio-card__overlay">
+              <p class="portfolio-card__category">Hospitality · Booking</p>
+              <h3 class="portfolio-card__title">The Ivory Tower Hotel</h3>
+              <a href="#" class="portfolio-card__cta" id="project-ivory-cta">View Project →</a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Portfolio Modal -->
+  <div class="project-modal" id="projectModal" aria-hidden="true" role="dialog" aria-labelledby="modalTitle">
+    <div class="project-modal__backdrop" id="modalBackdrop"></div>
+    <div class="project-modal__content">
+      <button class="project-modal__close" id="modalClose" aria-label="Close project">✕</button>
+      <div class="project-modal__body" id="modalBody">
+        <div class="project-modal__img-wrap">
+          <img src="" alt="" class="project-modal__img" id="modalImg" />
+        </div>
+        <div class="project-modal__info">
+          <p class="project-modal__category" id="modalCategory"></p>
+          <h2 class="project-modal__title" id="modalTitle"></h2>
+          <p class="project-modal__desc" id="modalDesc"></p>
+          <div class="project-modal__tags" id="modalTags"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 5: PROCESS (Sticky Horizontal)
+  ═══════════════════════════════════════ -->
+  <section id="process" class="process">
+    <div class="process__sticky-wrap" id="processStickyWrap">
+      <div class="process__header">
+        <span class="eyebrow">Our Methodology</span>
+        <h2 class="process__heading">How We <span class="gold-text">Work</span></h2>
+      </div>
+      <div class="process__track" id="processTrack">
+
+        <div class="process-step" id="step-1">
+          <div class="process-step__num-wrap">
+            <svg class="process-step__circle-svg" viewBox="0 0 100 100">
+              <circle class="process-step__circle-bg" cx="50" cy="50" r="45"/>
+              <circle class="process-step__circle-draw" cx="50" cy="50" r="45"/>
+            </svg>
+            <span class="process-step__num">01</span>
+          </div>
+          <h3 class="process-step__title">Discovery</h3>
+          <p class="process-step__desc">We listen before we design. Deep research into your brand, audience, and competitive landscape.</p>
+        </div>
+
+        <div class="process-step" id="step-2">
+          <div class="process-step__num-wrap">
+            <svg class="process-step__circle-svg" viewBox="0 0 100 100">
+              <circle class="process-step__circle-bg" cx="50" cy="50" r="45"/>
+              <circle class="process-step__circle-draw" cx="50" cy="50" r="45"/>
+            </svg>
+            <span class="process-step__num">02</span>
+          </div>
+          <h3 class="process-step__title">Strategy</h3>
+          <p class="process-step__desc">Architecture meets artistry. Information architecture, wireframes, and design systems aligned to your goals.</p>
+        </div>
+
+        <div class="process-step" id="step-3">
+          <div class="process-step__num-wrap">
+            <svg class="process-step__circle-svg" viewBox="0 0 100 100">
+              <circle class="process-step__circle-bg" cx="50" cy="50" r="45"/>
+              <circle class="process-step__circle-draw" cx="50" cy="50" r="45"/>
+            </svg>
+            <span class="process-step__num">03</span>
+          </div>
+          <h3 class="process-step__title">Build</h3>
+          <p class="process-step__desc">Crafted line by line, pixel by pixel. Code written for performance, elegance, and longevity.</p>
+        </div>
+
+        <div class="process-step" id="step-4">
+          <div class="process-step__num-wrap">
+            <svg class="process-step__circle-svg" viewBox="0 0 100 100">
+              <circle class="process-step__circle-bg" cx="50" cy="50" r="45"/>
+              <circle class="process-step__circle-draw" cx="50" cy="50" r="45"/>
+            </svg>
+            <span class="process-step__num">04</span>
+          </div>
+          <h3 class="process-step__title">Launch &amp; Beyond</h3>
+          <p class="process-step__desc">Shipped with care, supported with pride. Ongoing optimization and growth, long after go-live.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 6: TESTIMONIALS
+  ═══════════════════════════════════════ -->
+  <section id="testimonials" class="testimonials reveal-section">
+    <div class="testimonials__deco-quote">"</div>
+    <div class="testimonials__slider" id="testimonialsSlider">
+
+      <div class="testimonial-slide active" id="testimonial-1">
+        <div class="testimonial-card">
+          <div class="testimonial-card__border"></div>
+          <blockquote class="testimonial-card__quote">
+            SNS Digital didn't just build us a website — they built our brand's digital identity. The attention to detail, the elegance of execution, and the after-launch support have been nothing short of extraordinary.
+          </blockquote>
+          <footer class="testimonial-card__footer">
+            <span class="testimonial-card__name">Alexandra Fontaine</span>
+            <span class="testimonial-card__company">Maison Vérité, Creative Director</span>
+          </footer>
+        </div>
+      </div>
+
+      <div class="testimonial-slide" id="testimonial-2">
+        <div class="testimonial-card">
+          <div class="testimonial-card__border"></div>
+          <blockquote class="testimonial-card__quote">
+            From discovery to deployment, the SNS team operated at a level of professionalism I haven't experienced elsewhere. Our dashboard platform launched ahead of schedule and exceeded every performance benchmark.
+          </blockquote>
+          <footer class="testimonial-card__footer">
+            <span class="testimonial-card__name">Marcus Chen</span>
+            <span class="testimonial-card__company">Arcane Analytics, CEO</span>
+          </footer>
+        </div>
+      </div>
+
+      <div class="testimonial-slide" id="testimonial-3">
+        <div class="testimonial-card">
+          <div class="testimonial-card__border"></div>
+          <blockquote class="testimonial-card__quote">
+            Our booking rate increased by 340% within three months of launching the new site. SNS Digital understood the soul of our hotel and translated it beautifully into a digital experience our guests love.
+          </blockquote>
+          <footer class="testimonial-card__footer">
+            <span class="testimonial-card__name">Isabelle Marchetti</span>
+            <span class="testimonial-card__company">The Ivory Tower Hotel, GM</span>
+          </footer>
+        </div>
+      </div>
+
+    </div>
+    <div class="testimonials__controls">
+      <button class="testimonials__btn" id="testimonialPrev" aria-label="Previous testimonial">←</button>
+      <div class="testimonials__dots">
+        <button class="testimonials__dot active" data-index="0" id="dot-0" aria-label="Testimonial 1"></button>
+        <button class="testimonials__dot" data-index="1" id="dot-1" aria-label="Testimonial 2"></button>
+        <button class="testimonials__dot" data-index="2" id="dot-2" aria-label="Testimonial 3"></button>
+      </div>
+      <button class="testimonials__btn" id="testimonialNext" aria-label="Next testimonial">→</button>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 7: CONTACT
+  ═══════════════════════════════════════ -->
+  <section id="contact" class="contact reveal-section">
+    <div class="contact__left">
+      <span class="eyebrow reveal-left">Start a Project</span>
+      <h2 class="contact__heading reveal-left">Let's Build Something <em>Extraordinary</em></h2>
+      <p class="contact__sub reveal-left">Reach out — we respond within 24 hours.</p>
+    </div>
+    <div class="contact__right">
+      <form class="contact-form" id="contactForm" novalidate>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" placeholder="Your full name" required autocomplete="name" />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="your@email.com" required autocomplete="email" />
+        </div>
+        <div class="form-group">
+          <label for="company">Company</label>
+          <input type="text" id="company" name="company" placeholder="Your company" autocomplete="organization" />
+        </div>
+        <div class="form-group">
+          <label for="project-type">Project Type</label>
+          <select id="project-type" name="project-type">
+            <option value="" disabled selected>Select a service</option>
+            <option value="web">Web Design &amp; Development</option>
+            <option value="ecommerce">E-Commerce Solutions</option>
+            <option value="brand">Brand Identity</option>
+            <option value="software">Custom Software</option>
+            <option value="seo">SEO &amp; Performance</option>
+            <option value="support">Maintenance &amp; Support</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group form-group--full">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="4" placeholder="Tell us about your project..." required></textarea>
+        </div>
+        <button type="submit" class="form-submit" id="formSubmit">Send Message →</button>
+      </form>
+
+      <!-- Success State -->
+      <div class="form-success" id="formSuccess" aria-hidden="true">
+        <div class="form-success__icon">
+          <svg viewBox="0 0 60 60" fill="none">
+            <circle cx="30" cy="30" r="28" stroke="#C9A84C" stroke-width="2"/>
+            <path class="success-check" d="M18 30 L26 38 L42 22" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </div>
+        <h3>Message Sent!</h3>
+        <p>We'll be in touch within 24 hours.</p>
+      </div>
+    </div>
+
+    <!-- Secondary CTA -->
+    <div class="contact__secondary">
+      <p>Prefer to talk?</p>
+      <button class="contact__call-btn" id="bookCallBtn">Book a 30-Minute Call</button>
+    </div>
+  </section>
+
+  <!-- Booking Modal -->
+  <div class="booking-modal" id="bookingModal" aria-hidden="true" role="dialog" aria-label="Book a call">
+    <div class="booking-modal__backdrop" id="bookingBackdrop"></div>
+    <div class="booking-modal__content">
+      <button class="booking-modal__close" id="bookingClose" aria-label="Close booking">✕</button>
+      <div class="booking-modal__inner">
+        <div class="booking-modal__icon">📅</div>
+        <h3 class="booking-modal__title">Book a 30-Minute Call</h3>
+        <p class="booking-modal__sub">Choose a time that works for you. We'll discuss your project goals, timeline, and how we can help.</p>
+        <div class="booking-modal__slots">
+          <button class="booking-slot" id="slot-1">Mon, Jun 16 · 10:00 AM</button>
+          <button class="booking-slot" id="slot-2">Mon, Jun 16 · 2:00 PM</button>
+          <button class="booking-slot" id="slot-3">Tue, Jun 17 · 11:00 AM</button>
+          <button class="booking-slot" id="slot-4">Wed, Jun 18 · 3:00 PM</button>
+          <button class="booking-slot" id="slot-5">Thu, Jun 19 · 9:00 AM</button>
+          <button class="booking-slot" id="slot-6">Fri, Jun 20 · 1:00 PM</button>
+        </div>
+        <button class="booking-modal__confirm" id="bookingConfirm">Confirm Booking →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════ -->
+  <footer class="footer" id="footer">
+    <div class="footer__grid">
+
+      <div class="footer__col footer__col--brand" id="footer-col-1">
+        <div class="footer__logo">SNS</div>
+        <p class="footer__tagline">Elegant Tech. Bespoke Solutions.</p>
+        <div class="footer__socials">
+          <a href="#" class="footer__social" id="social-instagram" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#" class="footer__social" id="social-linkedin" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.01M11 17v-3.5a2.5 2.5 0 015 0V17M11 10v7"/></svg>
+          </a>
+          <a href="#" class="footer__social" id="social-behance" aria-label="Behance">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h8a4 4 0 010 8H3V7z"/><path d="M3 12h7"/><path d="M14 9h7M17 7v10M14 16h7"/></svg>
+          </a>
+          <a href="#" class="footer__social" id="social-github" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer__col" id="footer-col-2">
+        <h4 class="footer__col-title">Quick Links</h4>
+        <ul class="footer__links">
+          <li><a href="#about" class="footer__link">About</a></li>
+          <li><a href="#services" class="footer__link">Services</a></li>
+          <li><a href="#work" class="footer__link">Work</a></li>
+          <li><a href="#" class="footer__link">Blog</a></li>
+          <li><a href="#" class="footer__link">Careers</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col" id="footer-col-3">
+        <h4 class="footer__col-title">Services</h4>
+        <ul class="footer__links">
+          <li><a href="#services" class="footer__link">Web Design</a></li>
+          <li><a href="#services" class="footer__link">E-Commerce</a></li>
+          <li><a href="#services" class="footer__link">Branding</a></li>
+          <li><a href="#services" class="footer__link">Software</a></li>
+          <li><a href="#services" class="footer__link">SEO</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col" id="footer-col-4">
+        <h4 class="footer__col-title">Contact</h4>
+        <ul class="footer__links footer__links--contact">
+          <li><a href="mailto:hello@snsdigital.com" class="footer__link">hello@snsdigital.com</a></li>
+          <li><a href="tel:+15550123456" class="footer__link">+1 (555) 012-3456</a></li>
+          <li><a href="#" class="footer__link">www.snsdigital.com</a></li>
+        </ul>
+        <div class="footer__qr" aria-label="QR Code for website">
+          <svg viewBox="0 0 60 60" fill="none">
+            <rect x="2" y="2" width="24" height="24" rx="2" stroke="#C9A84C" stroke-width="1.5"/>
+            <rect x="8" y="8" width="12" height="12" rx="1" fill="#C9A84C"/>
+            <rect x="34" y="2" width="24" height="24" rx="2" stroke="#C9A84C" stroke-width="1.5"/>
+            <rect x="40" y="8" width="12" height="12" rx="1" fill="#C9A84C"/>
+            <rect x="2" y="34" width="24" height="24" rx="2" stroke="#C9A84C" stroke-width="1.5"/>
+            <rect x="8" y="40" width="12" height="12" rx="1" fill="#C9A84C"/>
+            <rect x="34" y="34" width="6" height="6" fill="#C9A84C"/>
+            <rect x="46" y="34" width="6" height="6" fill="#C9A84C"/>
+            <rect x="34" y="46" width="6" height="6" fill="#C9A84C"/>
+            <rect x="46" y="46" width="6" height="6" fill="#C9A84C"/>
+            <rect x="40" y="40" width="6" height="6" fill="#C9A84C" opacity="0.4"/>
+          </svg>
+          <span>Scan to visit</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer__bottom">
+      <div class="footer__rule"></div>
+      <div class="footer__bottom-inner">
+        <p class="footer__copy">© 2025 SNS Digital. All rights reserved.</p>
+        <div class="footer__legal">
+          <a href="#" class="footer__legal-link" id="footer-privacy">Privacy Policy</a>
+          <span>·</span>
+          <a href="#" class="footer__legal-link" id="footer-terms">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- GSAP from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
