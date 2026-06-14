@@ -18,7 +18,7 @@ function initLoader() {
   const hideLoader = () => {
     loader.classList.add('hidden');
     document.body.style.overflow = '';
-    initMacBook();
+    initHeroScroll();
   };
 
   document.body.style.overflow = 'hidden';
@@ -147,101 +147,35 @@ function initParticles() {
 /* ═══════════════════════════════════════════════════════════
    4. MACBOOK LID ANIMATION + HERO ZOOM
 ═══════════════════════════════════════════════════════════ */
-function initMacBook() {
-  const lid          = document.getElementById('macbookLid');
-  const macbookScene = document.getElementById('macbookScene');
-  const hero         = document.getElementById('hero');
-  if (!lid) return;
+function initHeroScroll() {
+  const hero = document.getElementById('hero');
+  if (!hero) return;
 
-  if (reducedMotion) {
-    lid.classList.add('open');
-    return;
-  }
-
-  // Open lid immediately without jarring delay
-  requestAnimationFrame(() => {
-    lid.classList.add('open');
-  });
-
-  // Scroll-triggered zoom: MacBook scales up heavily to enter the screen
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
 
-    const macbookGlow = document.getElementById('macbookGlow');
-    const macbookBase = document.getElementById('macbookBase');
-    const navbar      = document.getElementById('navbar');
-
-    // Set origin so that zooming goes right into the screen and force 3D rendering
-    gsap.set(macbookScene, { transformOrigin: "50% 40%", force3D: true });
-
-    // Coordinated timeline mapped to hero scroll
     const zoomTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: hero,
         start: 'top top',
         end: 'bottom top',
-        scrub: true,
-        onUpdate: (self) => {
-          if (navbar) {
-            // Disable backdrop blur during zoom transitions to avoid massive layout rendering stalls
-            if (self.progress > 0.05 && self.progress < 0.95) {
-              navbar.classList.add('navbar--no-blur');
-            } else {
-              navbar.classList.remove('navbar--no-blur');
-            }
-          }
-        }
+        scrub: true
       }
     });
 
-    // 1. Scale the MacBook
-    zoomTimeline.to(macbookScene, {
-      scale: 25,
+    // Fade hero background to dark espresso to match About section entry
+    zoomTimeline.to(hero, {
+      backgroundColor: '#322d29',
       ease: 'none',
       duration: 1.0
     }, 0);
-
-    // 2. Fade out and disable the blurred background glow
-    if (macbookGlow) {
-      zoomTimeline.to(macbookGlow, {
-        opacity: 0,
-        ease: 'none',
-        duration: 0.1,
-        onComplete: () => { macbookGlow.style.visibility = 'hidden'; },
-        onReverseComplete: () => { macbookGlow.style.visibility = 'visible'; }
-      }, 0);
-    }
-
-    // 3. Fade out and disable the base and keyboard as they exit viewports
-    if (macbookBase) {
-      zoomTimeline.to(macbookBase, {
-        opacity: 0,
-        ease: 'none',
-        duration: 0.15,
-        onComplete: () => { macbookBase.style.display = 'none'; },
-        onReverseComplete: () => { macbookBase.style.display = 'block'; }
-      }, 0);
-    }
-
-    // 4. Fade out screen logo & details
-    zoomTimeline.to('.macbook__screen-content', {
-      opacity: 0,
-      ease: 'power2.in',
-      duration: 0.4
-    }, 0.2);
-
-    // 5. Fade hero background to black
-    zoomTimeline.to(hero, {
-      backgroundColor: '#000000',
-      ease: 'none',
-      duration: 0.8
-    }, 0.2);
 
     // Parallax on headline
     const heroHeadline = document.getElementById('heroHeadline');
     if (heroHeadline) {
       gsap.to(heroHeadline, {
-        y: '-30%',
+        y: '-100px',
+        opacity: 0,
         ease: 'none',
         scrollTrigger: {
           trigger: hero,
@@ -278,8 +212,16 @@ function initNavbar() {
   const mobileMenu = document.getElementById('mobileMenu');
   const mobileLinks = document.querySelectorAll('.mobile-menu__link, .mobile-menu__cta');
   const mobileClose = document.getElementById('mobileClose');
+  const navLogo   = document.getElementById('navLogo');
 
   if (!navbar) return;
+
+  if (navLogo) {
+    navLogo.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 
   window.addEventListener('scroll', () => {
     navbar.classList.toggle('scrolled', window.scrollY > 60);

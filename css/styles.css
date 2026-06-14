@@ -164,12 +164,9 @@ body:has(button:hover) .cursor-trail {
   align-items: center;
   flex-shrink: 0;
 }
-.navbar__monogram {
-  font-family: var(--ff-display);
-  font-weight: 700;
-  font-size: 1.1rem;
-  letter-spacing: 0.1em;
-  color: var(--gold);
+.navbar__logo-img {
+  height: 32px;
+  width: auto;
 }
 .navbar__links {
   display: flex;
@@ -302,195 +299,26 @@ body:has(button:hover) .cursor-trail {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
+  height: 100%;
   padding: 0 24px;
-  padding-top: 60px; /* clear navbar */
 }
 
-/* Logo above MacBook */
-.hero__logo-wrap {
-  text-align: center;
-  margin-bottom: 40px;
-  opacity: 0;
-  animation: fadeInUp 1.2s 0.4s var(--ease-expo) forwards;
-}
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.hero__monogram {
-  font-family: var(--ff-display);
-  font-weight: 900;
-  font-size: clamp(3rem, 8vw, 5.5rem);
-  color: var(--gold);
-  letter-spacing: 0.15em;
-  text-shadow: 0 0 60px rgba(201, 168, 76, 0.5);
-  line-height: 1;
-}
-.hero__tagline {
-  font-family: var(--ff-accent);
-  font-style: italic;
-  font-size: clamp(1rem, 2.5vw, 1.4rem);
-  color: var(--gold);
-  letter-spacing: 0.08em;
-  margin-top: 10px;
-  opacity: 0.85;
-}
-
-.macbook-scene {
-  perspective: 1400px;
-  perspective-origin: 50% 55%;
-  position: relative;
-  will-change: transform;
-  transform: translateZ(0); /* force hardware accel */
-}
-.macbook-glow {
-  position: absolute;
-  bottom: -30px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 70%;
-  height: 60px;
-  background: radial-gradient(ellipse at center, rgba(201,168,76,0.18) 0%, transparent 70%);
-  pointer-events: none;
-  filter: blur(12px);
-  z-index: 0;
-  will-change: opacity, visibility;
-}
-.macbook {
-  position: relative;
-  width: clamp(280px, 50vw, 560px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  will-change: transform;
-}
-/* LID */
-.macbook__lid {
-  width: 100%;
-  aspect-ratio: 16 / 10.5;
-  position: relative;
-  transform-origin: bottom center;
-  transform: rotateX(95deg);
-  transition: transform 1.8s cubic-bezier(0.45, 0.05, 0.55, 0.95);
-  transform-style: preserve-3d;
-}
-.macbook__lid.open { transform: rotateX(0deg); }
-
-.macbook__screen-bezel {
-  position: absolute;
-  inset: 0;
-  background: #1a1a1a;
-  border-radius: 12px 12px 0 0;
-  padding: 16px 16px 8px;
-  box-shadow: 0 -4px 40px rgba(0,0,0,0.6), 0 0 0 1px #3a3a3a;
-  backface-visibility: hidden;
-}
-.macbook__screen {
-  width: 100%;
-  height: 100%;
-  background: #0d0d0d;
-  border-radius: 6px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-.macbook__screen-content {
-  text-align: center;
-  opacity: 0;
-  transition: opacity 1s 1.4s ease;
-  position: relative;
-  z-index: 1;
-}
-.macbook__lid.open .macbook__screen-content { opacity: 1; }
-.screen-logo {
-  font-family: var(--ff-display);
-  font-weight: 900;
-  font-size: clamp(1.4rem, 4vw, 2.4rem);
-  color: var(--gold);
-  letter-spacing: 0.2em;
-  /* Replaced drop-shadow with text-shadow for better scaling performance */
-  text-shadow: 0 0 20px rgba(201,168,76,0.8);
-}
-.screen-tagline {
-  font-family: var(--ff-accent);
-  font-style: italic;
-  font-size: clamp(0.5rem, 1.2vw, 0.8rem);
-  color: rgba(201,168,76,0.7);
-  letter-spacing: 0.1em;
-  margin-top: 6px;
-}
-.screen-glow {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at center, rgba(201,168,76,0.12) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-/* Lid Back */
-.macbook__lid-back {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(145deg, #e6e6e6 0%, #cccccc 100%);
-  border-radius: 12px 12px 0 0;
-  backface-visibility: hidden;
-  transform: rotateX(180deg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.macbook__apple-logo {
-  font-family: var(--ff-display);
-  font-weight: 900;
-  font-size: 1.4rem;
-  color: rgba(0,0,0,0.1);
-  letter-spacing: 0.2em;
-}
-
-/* Base */
-.macbook__base {
-  width: 104%;
-  background: linear-gradient(180deg, #d4d4d4 0%, #a3a3a3 100%);
-  border-radius: 0 0 8px 8px;
-  padding: 10px 20px 8px;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 2px 0 #777;
-}
-.macbook__keyboard {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  background: #bcbcbc;
-  padding: 4px;
-  border-radius: 6px;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
-}
-.macbook__keys {
-  height: 42px;
-  background: #1a1a1a;
-  border-radius: 4px;
-  opacity: 0.85;
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.8);
-}
-.macbook__touchpad {
-  height: 24px;
-  width: 40%;
-  margin: 0 auto;
-  background: #b5b5b5;
-  border-radius: 4px;
-  border: 1px solid #999;
-}
 
 /* Hero Headline */
 .hero__headline {
-  position: absolute;
-  bottom: clamp(60px, 12vh, 120px);
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
   text-align: center;
   pointer-events: none;
   z-index: 1;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1.2s 0.2s var(--ease-expo) forwards;
 }
 .hero__headline-small {
   font-family: var(--ff-body);
@@ -508,7 +336,6 @@ body:has(button:hover) .cursor-trail {
   color: var(--ivory);
   letter-spacing: -0.01em;
   line-height: 1;
-  opacity: 0.15;
 }
 
 .hero__scroll-hint {
