@@ -46,15 +46,13 @@ function initCursor() {
   document.addEventListener('mousemove', (e) => {
     mx = e.clientX;
     my = e.clientY;
-    cursor.style.left = mx + 'px';
-    cursor.style.top  = my + 'px';
+    cursor.style.transform = `translate3d(${mx}px, ${my}px, 0) translate(-50%, -50%)`;
   });
 
   function animateTrail() {
     tx += (mx - tx) * 0.12;
     ty += (my - ty) * 0.12;
-    trail.style.left = tx + 'px';
-    trail.style.top  = ty + 'px';
+    trail.style.transform = `translate3d(${tx}px, ${ty}px, 0) translate(-50%, -50%)`;
     rafId = requestAnimationFrame(animateTrail);
   }
   animateTrail();
@@ -124,8 +122,14 @@ function initParticles() {
 
   for (let i = 0; i < 80; i++) particles.push(new Particle());
 
-  // Only animate particles when hero is visible
+  // Only animate particles when hero is visible and not scrolled past
   let animating = true;
+  let scrolledPastHero = false;
+
+  window.addEventListener('scroll', () => {
+    scrolledPastHero = window.scrollY > 60;
+  }, { passive: true });
+
   const heroObs = new IntersectionObserver(entries => {
     animating = entries[0].isIntersecting;
   }, { threshold: 0 });
@@ -133,7 +137,7 @@ function initParticles() {
 
   function loop() {
     requestAnimationFrame(loop);
-    if (!animating) return;
+    if (!animating || scrolledPastHero) return;
     ctx.clearRect(0, 0, W, H);
     particles.forEach(p => { p.update(); p.draw(); });
   }
@@ -163,44 +167,75 @@ function initMacBook() {
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Set origin so that zooming goes right into the screen
-    gsap.set(macbookScene, { transformOrigin: "50% 40%" });
+    const macbookGlow = document.getElementById('macbookGlow');
+    const macbookBase = document.getElementById('macbookBase');
+    const navbar      = document.getElementById('navbar');
 
-    // Hero scroll zoom
-    gsap.to(macbookScene, {
-      scale: 25,
-      ease: 'none',
+    // Set origin so that zooming goes right into the screen and force 3D rendering
+    gsap.set(macbookScene, { transformOrigin: "50% 40%", force3D: true });
+
+    // Coordinated timeline mapped to hero scroll
+    const zoomTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: hero,
         start: 'top top',
         end: 'bottom top',
         scrub: true,
+        onUpdate: (self) => {
+          if (navbar) {
+            // Disable backdrop blur during zoom transitions to avoid massive layout rendering stalls
+            if (self.progress > 0.05 && self.progress < 0.95) {
+              navbar.classList.add('navbar--no-blur');
+            } else {
+              navbar.classList.remove('navbar--no-blur');
+            }
+          }
+        }
       }
     });
 
-    // Fade out heavy filter elements as we zoom to save GPU
-    gsap.to('.macbook-scene::after, .macbook__screen-content', {
+    // 1. Scale the MacBook
+    zoomTimeline.to(macbookScene, {
+      scale: 25,
+      ease: 'none',
+      duration: 1.0
+    }, 0);
+
+    // 2. Fade out and disable the blurred background glow
+    if (macbookGlow) {
+      zoomTimeline.to(macbookGlow, {
+        opacity: 0,
+        ease: 'none',
+        duration: 0.1,
+        onComplete: () => { macbookGlow.style.visibility = 'hidden'; },
+        onReverseComplete: () => { macbookGlow.style.visibility = 'visible'; }
+      }, 0);
+    }
+
+    // 3. Fade out and disable the base and keyboard as they exit viewports
+    if (macbookBase) {
+      zoomTimeline.to(macbookBase, {
+        opacity: 0,
+        ease: 'none',
+        duration: 0.15,
+        onComplete: () => { macbookBase.style.display = 'none'; },
+        onReverseComplete: () => { macbookBase.style.display = 'block'; }
+      }, 0);
+    }
+
+    // 4. Fade out screen logo & details
+    zoomTimeline.to('.macbook__screen-content', {
       opacity: 0,
       ease: 'power2.in',
-      scrollTrigger: {
-        trigger: hero,
-        start: '20% top',
-        end: '60% top',
-        scrub: true,
-      }
-    });
+      duration: 0.4
+    }, 0.2);
 
-    // Fade hero background to black on scroll
-    gsap.to(hero, {
+    // 5. Fade hero background to black
+    zoomTimeline.to(hero, {
       backgroundColor: '#000000',
       ease: 'none',
-      scrollTrigger: {
-        trigger: hero,
-        start: '20% top',
-        end: 'bottom top',
-        scrub: true,
-      }
-    });
+      duration: 0.8
+    }, 0.2);
 
     // Parallax on headline
     const heroHeadline = document.getElementById('heroHeadline');
