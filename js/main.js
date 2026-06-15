@@ -343,50 +343,24 @@ function initTextHighlight() {
     });
   }
 
-  // Determine if paragraph is on a dark background
-  // (check ancestor background color heuristic)
-  function isOnDark(el) {
-    let node = el.parentElement;
-    while (node && node !== document.body) {
-      const bg = getComputedStyle(node).backgroundColor;
-      if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') {
-        // Check if it's a dark color by luminance
-        const m = bg.match(/\d+/g);
-        if (m) {
-          const [r, g, b] = m.map(Number);
-          const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-          return lum < 128;
-        }
-      }
-      node = node.parentElement;
-    }
-    return false;
-  }
-
-  // Scroll listener per paragraph
+  // Scroll listener per paragraph using GSAP ScrollTrigger scrub
   paras.forEach(para => {
     const words = para.querySelectorAll('.word');
     if (!words.length) return;
 
-    // Set initial (unlit) colour based on context
-    const dark = isOnDark(para);
-    words.forEach(w => {
-      w.style.color = dark ? 'rgba(172,156,141,0.5)' : 'var(--taupe)';
-    });
-
-    const obs = new IntersectionObserver((entries) => {
-      if (!entries[0].isIntersecting) return;
-
-      words.forEach((word, i) => {
-        setTimeout(() => {
-          word.classList.add('lit');
-          word.style.color = dark ? 'var(--ivory)' : 'var(--espresso)';
-        }, i * 55);
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      gsap.to(words, {
+        color: '#ffffff',
+        textShadow: '0 0 12px rgba(255, 255, 255, 0.45)',
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: para,
+          start: 'top 95%',
+          end: 'bottom 50%',
+          scrub: true
+        }
       });
-      obs.unobserve(para);
-    }, { threshold: 0.15 });
-
-    obs.observe(para);
+    }
   });
 }
 
@@ -561,6 +535,73 @@ function initPortfolioModal() {
   });
   if (closeBtn)  closeBtn.addEventListener('click', closeModal);
   if (backdrop)  backdrop.addEventListener('click', closeModal);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   13b. SERVICE MODAL
+═══════════════════════════════════════════════════════════ */
+const serviceData = {
+  web: {
+    title: 'Web Design & Development',
+    desc: 'Our web design process combines striking aesthetics with robust engineering. We build pixel-perfect interfaces that deliver frictionless user experiences, optimized for speed, accessibility, and conversion.'
+  },
+  ecommerce: {
+    title: 'E-Commerce Solutions',
+    desc: 'We engineer high-performance online stores that turn visitors into loyal customers. From headless commerce architectures to bespoke Shopify themes, we build platforms that scale with your ambitions.'
+  },
+  brand: {
+    title: 'Brand Identity Systems',
+    desc: 'A brand is more than a logo—it’s a feeling. We craft comprehensive visual languages, including typography, color systems, and brand guidelines, ensuring your identity commands attention across every touchpoint.'
+  },
+  software: {
+    title: 'Custom Software',
+    desc: 'Off-the-shelf solutions rarely fit perfectly. We design and build bespoke software applications, internal tools, and SaaS products tailored exactly to your complex operational workflows.'
+  },
+  seo: {
+    title: 'SEO & Performance',
+    desc: 'A beautiful website needs to be found. Our technical SEO and performance optimization strategies ensure your digital presence ranks high, loads instantly, and outpaces the competition.'
+  },
+  support: {
+    title: 'Maintenance & Support',
+    desc: 'Digital products are living ecosystems. We provide ongoing support, security updates, and iterative enhancements to keep your platform secure, fast, and relevant long after launch.'
+  }
+};
+
+/* window.openServiceModal is always available for inline onclick handlers */
+window.openServiceModal = function(key) {
+  const data = serviceData[key];
+  if (!data) return;
+  const modal = document.getElementById('serviceModal');
+  if (!modal) return;
+  document.getElementById('serviceModalTitle').textContent = data.title;
+  document.getElementById('serviceModalDesc').textContent = data.desc;
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+};
+
+function initServiceModal() {
+  const modal = document.getElementById('serviceModal');
+  const backdrop = document.getElementById('serviceModalBackdrop');
+  const closeBtn = document.getElementById('serviceModalClose');
+  const ctaBtn = document.getElementById('serviceModalCta');
+  if (!modal) return;
+
+  const closeModal = () => {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  };
+
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (backdrop) backdrop.addEventListener('click', closeModal);
+  if (ctaBtn) {
+    ctaBtn.addEventListener('click', () => {
+      closeModal();
+      document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    });
+  }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 }
 
@@ -1043,7 +1084,11 @@ document.addEventListener('DOMContentLoaded', () => {
   initServicesCarousel();
   initServicesDots();
   initCardTilt();
+  initTaglineLetterReveal();
+  initHorizontalScroll();
+  initParallax();
   initPortfolioModal();
+  initServiceModal();
   initTestimonialsSlider();
   initContactForm();
   initBookingModal();

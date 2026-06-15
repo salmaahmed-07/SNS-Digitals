@@ -103,7 +103,7 @@
       <div class="about__number reveal-left">01</div>
       <h2 class="about__heading reveal-left">We Are<br/><em>SNS Digital</em></h2>
       <p class="about__body highlight-text reveal-left">
-        Born at the intersection of elegance and engineering, SNS Digital crafts bespoke digital experiences for brands that refuse to be ordinary. We don't build websites — we build <span class="underline-draw">legacies</span>.
+        Born at the intersection of elegance and engineering, SNS Digital crafts bespoke digital experiences for brands that refuse to be ordinary. We don't build websites — we build legacies.
       </p>
     </div>
     <div class="about__right">
@@ -144,6 +144,9 @@
           <div class="service-card__icon">◈</div>
           <h3 class="service-card__title">Web Design &amp; Development</h3>
           <p class="service-card__desc">Pixel-perfect builds that feel alive</p>
+          <div class="service-card__btn-wrap">
+            <button class="service-card__btn" onclick="window.openServiceModal('web')">Know more</button>
+          </div>
         </article>
 
         <article class="service-card tilt-card" id="service-2">
@@ -151,6 +154,9 @@
           <div class="service-card__icon">◎</div>
           <h3 class="service-card__title">E-Commerce Solutions</h3>
           <p class="service-card__desc">Online stores engineered to convert</p>
+          <div class="service-card__btn-wrap">
+            <button class="service-card__btn" onclick="window.openServiceModal('ecommerce')">Know more</button>
+          </div>
         </article>
 
         <article class="service-card tilt-card" id="service-3">
@@ -158,6 +164,9 @@
           <div class="service-card__icon">◐</div>
           <h3 class="service-card__title">Brand Identity Systems</h3>
           <p class="service-card__desc">Visual languages that command attention</p>
+          <div class="service-card__btn-wrap">
+            <button class="service-card__btn" onclick="window.openServiceModal('brand')">Know more</button>
+          </div>
         </article>
 
         <article class="service-card tilt-card" id="service-4">
@@ -165,6 +174,9 @@
           <div class="service-card__icon">◬</div>
           <h3 class="service-card__title">Custom Software</h3>
           <p class="service-card__desc">Bespoke tools built for your exact workflow</p>
+          <div class="service-card__btn-wrap">
+            <button class="service-card__btn" onclick="window.openServiceModal('software')">Know more</button>
+          </div>
         </article>
 
         <article class="service-card tilt-card" id="service-5">
@@ -172,6 +184,9 @@
           <div class="service-card__icon">◉</div>
           <h3 class="service-card__title">SEO &amp; Performance</h3>
           <p class="service-card__desc">Beautiful sites that Google loves too</p>
+          <div class="service-card__btn-wrap">
+            <button class="service-card__btn" onclick="window.openServiceModal('seo')">Know more</button>
+          </div>
         </article>
 
         <article class="service-card tilt-card" id="service-6">
@@ -179,6 +194,9 @@
           <div class="service-card__icon">◈</div>
           <h3 class="service-card__title">Maintenance &amp; Support</h3>
           <p class="service-card__desc">We stay after the curtain call</p>
+          <div class="service-card__btn-wrap">
+            <button class="service-card__btn" onclick="window.openServiceModal('support')">Know more</button>
+          </div>
         </article>
 
       </div>
@@ -188,6 +206,20 @@
       <button class="services__btn" id="servicesNext" aria-label="Next service">→</button>
     </div>
   </section>
+
+  <!-- Service Feature Modal -->
+  <div class="service-modal" id="serviceModal" aria-hidden="true" role="dialog" aria-labelledby="serviceModalTitle">
+    <div class="service-modal__backdrop" id="serviceModalBackdrop"></div>
+    <div class="service-modal__content">
+      <button class="service-modal__close" id="serviceModalClose" aria-label="Close feature info">✕</button>
+      <div class="service-modal__body">
+        <h2 class="service-modal__title" id="serviceModalTitle"></h2>
+        <div class="service-modal__rule"></div>
+        <p class="service-modal__desc" id="serviceModalDesc"></p>
+        <button class="service-modal__cta" id="serviceModalCta">Start this project →</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ═══════════════════════════════════════
        SECTION 4: PORTFOLIO
@@ -206,7 +238,7 @@
           <div class="portfolio-card__overlay">
             <p class="portfolio-card__category">Luxury Fashion · E-Commerce</p>
             <h3 class="portfolio-card__title">Maison Vérité</h3>
-            <a href="#" class="portfolio-card__cta" id="project-maison-cta">View Project →</a>
+            <a href="https://maison-verite-nine.vercel.app/" class="portfolio-card__cta" id="project-maison-cta" target="_blank">View Project →</a>
           </div>
         </div>
       </article>

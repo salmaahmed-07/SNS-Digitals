@@ -7,11 +7,12 @@
 :root {
   --espresso:    #322D29;
   --burgundy:    #72383D;
+  --deep-red:    #5E1224;
   --taupe:       #AC9C8D;
   --parchment:   #D1C7BD;
   --silver:      #D9D9D9;
   --ivory:       #EFE9E1;
-  --gold:        #C9A84C;
+  --gold:        #A68241;
 
   --ff-display:  'Playfair Display', Georgia, serif;
   --ff-body:     'DM Sans', system-ui, sans-serif;
@@ -65,8 +66,8 @@ button { cursor: none; border: none; background: none; font-family: var(--ff-bod
 .loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 .loader__inner { text-align: center; }
 .loader__logo {
-  width: 180px;
-  height: 70px;
+  width: 320px;
+  height: 125px;
   display: block;
   margin: 0 auto 16px;
 }
@@ -165,8 +166,10 @@ body:has(button:hover) .cursor-trail {
   flex-shrink: 0;
 }
 .navbar__logo-img {
-  height: 32px;
+  height: 72px;
   width: auto;
+  margin-top: -20px;
+  margin-bottom: -20px;
 }
 .navbar__links {
   display: flex;
@@ -270,7 +273,7 @@ body:has(button:hover) .cursor-trail {
 .hero {
   position: relative;
   height: 100vh;
-  background: #4A2024;
+  background: var(--deep-red);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -399,24 +402,10 @@ body:has(button:hover) .cursor-trail {
 
 /* ─── Text highlight sweep ───────────────────────────────── */
 .highlight-text span.word {
-  color: var(--taupe);
-  transition: color 0.3s;
+  color: rgba(255, 255, 255, 0.4);
   display: inline-block;
   position: relative;
 }
-.highlight-text span.word.lit { color: var(--espresso); }
-.highlight-text span.word.lit::after {
-  content: '';
-  position: absolute;
-  left: 0; bottom: -2px;
-  height: 2px;
-  width: 100%;
-  background: var(--gold);
-  transform: scaleX(0);
-  transform-origin: left;
-  animation: underlineSweep 0.3s var(--ease-expo) forwards;
-}
-@keyframes underlineSweep { to { transform: scaleX(1); } }
 
 /* Highlight burst */
 .highlight-burst {
@@ -575,24 +564,29 @@ body:has(button:hover) .cursor-trail {
 }
 .services__track {
   display: flex;
+  align-items: stretch;
   gap: 24px;
   padding: 0 clamp(24px, 6vw, 80px);
   transition: transform 0.6s var(--ease-expo);
 }
 .service-card {
   flex: 0 0 clamp(260px, 28vw, 340px);
+  display: flex;
+  flex-direction: column;
   background: linear-gradient(135deg, var(--espresso) 0%, #25211e 100%);
   border-radius: 20px;
   padding: 36px 30px;
   position: relative;
-  overflow: hidden;
-  transition: transform 0.4s var(--ease-expo), box-shadow 0.4s;
+  overflow: visible;
+  transition: transform 0.4s var(--ease-expo), box-shadow 0.4s, padding-bottom 0.4s var(--ease-expo);
   cursor: none;
   border: 1px solid rgba(255, 255, 255, 0.03);
+  /* clip background to border-radius even with overflow:visible */
+  background-clip: padding-box;
 }
 .service-card:hover {
-  transform: perspective(800px) rotateX(2deg) rotateY(-3deg) translateY(-8px);
-  box-shadow: 0 30px 60px rgba(0,0,0,0.3), 0 0 0 1.5px var(--burgundy);
+  transform: translateY(-8px);
+  box-shadow: 0 10px 40px rgba(201,168,76,0.15), 0 0 0 1px var(--gold);
 }
 .service-card__num {
   font-family: var(--ff-accent);
@@ -630,6 +624,41 @@ body:has(button:hover) .cursor-trail {
   line-height: 1.6;
   position: relative;
   z-index: 1;
+  flex-grow: 1;
+}
+.service-card__btn-wrap {
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: height 0.4s var(--ease-expo), opacity 0.4s var(--ease-expo), margin-top 0.4s var(--ease-expo);
+  position: relative;
+  z-index: 10;
+  pointer-events: none;
+}
+.service-card:hover .service-card__btn-wrap {
+  height: 40px;
+  opacity: 1;
+  margin-top: 20px;
+  pointer-events: auto;
+}
+.service-card__btn {
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 8px 20px;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: none;
+  transition: background 0.3s, color 0.3s;
+  display: inline-block;
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 100;
+}
+.service-card__btn:hover {
+  background: var(--gold);
+  color: var(--espresso);
 }
 .services__nav {
   display: flex;
@@ -677,6 +706,93 @@ body:has(button:hover) .cursor-trail {
   transform: scale(1.4);
   width: 20px;
   border-radius: 9999px;
+}
+
+/* Service Feature Modal */
+.service-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s, visibility 0.4s;
+}
+.service-modal.open {
+  opacity: 1;
+  visibility: visible;
+}
+.service-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(50, 45, 41, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.service-modal__content {
+  position: relative;
+  background: var(--ivory);
+  width: 90%;
+  max-width: 600px;
+  border-radius: 24px;
+  padding: 48px;
+  z-index: 1;
+  transform: translateY(20px) scale(0.95);
+  transition: transform 0.5s var(--ease-expo);
+  border: 1px solid var(--silver);
+}
+.service-modal.open .service-modal__content {
+  transform: translateY(0) scale(1);
+}
+.service-modal__close {
+  position: absolute;
+  top: 24px; right: 24px;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--silver);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  color: var(--espresso);
+  transition: background 0.3s, color 0.3s;
+}
+.service-modal__close:hover {
+  background: var(--burgundy);
+  color: var(--gold);
+}
+.service-modal__title {
+  font-family: var(--ff-display);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700;
+  color: var(--espresso);
+  margin-bottom: 16px;
+}
+.service-modal__rule {
+  width: 60px;
+  height: 2px;
+  background: var(--gold);
+  margin-bottom: 24px;
+}
+.service-modal__desc {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--espresso);
+  margin-bottom: 32px;
+}
+.service-modal__cta {
+  display: inline-block;
+  padding: 12px 28px;
+  background: var(--espresso);
+  color: var(--gold);
+  border-radius: 9999px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.service-modal__cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(50,45,41,0.2);
 }
 
 /* ═══════════════════════════════════════════════════════════
