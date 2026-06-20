@@ -533,6 +533,12 @@ function initPortfolioModal() {
   document.querySelectorAll('.portfolio-card').forEach(card => {
     card.addEventListener('click', () => openModal(card.dataset.project));
   });
+  // Prevent description modal from opening when clicking the "View Project" CTA link
+  document.querySelectorAll('.portfolio-card__cta').forEach(cta => {
+    cta.addEventListener('click', e => {
+      e.stopPropagation();
+    });
+  });
   if (closeBtn)  closeBtn.addEventListener('click', closeModal);
   if (backdrop)  backdrop.addEventListener('click', closeModal);
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
@@ -599,7 +605,14 @@ function initServiceModal() {
   if (ctaBtn) {
     ctaBtn.addEventListener('click', () => {
       closeModal();
-      document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+      const target = document.getElementById('contact');
+      if (target) {
+        const navHVal = getComputedStyle(document.documentElement).getPropertyValue('--nav-h').trim();
+        const navH = parseInt(navHVal) || 72;
+        const topSpacing = window.innerWidth < 768 ? 14 : 24;
+        const offset = navH + topSpacing + 10;
+        window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
+      }
     });
   }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
@@ -867,16 +880,11 @@ function initStickyProcessScroll() {
     scrollTrigger: {
       trigger : section,
       start   : 'top top',
-      // Pin for enough scroll distance: 120vh per step
-      end     : `+=${steps.length * 120}vh`,
+      // Pin for enough scroll distance: 50vh per step
+      end     : `+=${steps.length * 50}vh`,
       pin     : true,
       anticipatePin: 1,
-      scrub   : 0.8,
-      snap    : {
-        snapTo    : 1 / (steps.length - 1),
-        duration  : { min: 0.2, max: 0.6 },
-        ease      : 'power2.inOut',
-      },
+      scrub   : 0.3,
     },
   });
 
@@ -915,7 +923,12 @@ function initGSAPAnimations() {
       const target = document.querySelector(a.getAttribute('href'));
       if (!target) return;
       e.preventDefault();
-      const offset = window.innerWidth < 768 ? 80 : 110;
+      
+      const navHVal = getComputedStyle(document.documentElement).getPropertyValue('--nav-h').trim();
+      const navH = parseInt(navHVal) || 72;
+      const topSpacing = window.innerWidth < 768 ? 14 : 24;
+      const offset = navH + topSpacing + 10;
+      
       window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
     });
   });
@@ -1056,16 +1069,7 @@ function initServicesDots() {
   });
 }
 
-/* ═══════════════════════════════════════════════════════════
-   SCROLL HINT
-═══════════════════════════════════════════════════════════ */
-function initScrollHint() {
-  const hint = document.getElementById('heroScrollHint');
-  if (!hint) return;
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 40) hint.style.opacity = '0';
-  }, { passive: true, once: true });
-}
+
 
 /* ═══════════════════════════════════════════════════════════
    INIT ALL
@@ -1084,9 +1088,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initServicesCarousel();
   initServicesDots();
   initCardTilt();
-  initTaglineLetterReveal();
-  initHorizontalScroll();
-  initParallax();
   initPortfolioModal();
   initServiceModal();
   initTestimonialsSlider();
@@ -1097,4 +1098,14 @@ document.addEventListener('DOMContentLoaded', () => {
   initStickyProcessScroll(); // Must run before initGSAPAnimations (both register ScrollTrigger)
   initGSAPAnimations();
   initScrollHint();
+});
+
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(() => {
+    if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+  });
+}
+
+window.addEventListener('load', () => {
+  if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
 });

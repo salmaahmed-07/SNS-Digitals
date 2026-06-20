@@ -213,8 +213,11 @@ body:has(button:hover) .cursor-trail {
 .navbar__hamburger {
   display: none;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 5px;
-  padding: 4px;
+  width: 44px;
+  height: 44px;
 }
 .navbar__hamburger span {
   display: block;
@@ -246,6 +249,11 @@ body:has(button:hover) .cursor-trail {
 .mobile-menu__close {
   position: absolute;
   top: 28px; right: 28px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 1.5rem;
   color: var(--ivory);
   cursor: none;
@@ -742,6 +750,8 @@ body:has(button:hover) .cursor-trail {
   transform: translateY(20px) scale(0.95);
   transition: transform 0.5s var(--ease-expo);
   border: 1px solid var(--silver);
+  max-height: 90vh;
+  overflow-y: auto;
 }
 .service-modal.open .service-modal__content {
   transform: translateY(0) scale(1);
@@ -899,13 +909,26 @@ body:has(button:hover) .cursor-trail {
 }
 .portfolio-card__cta {
   display: inline-block;
-  font-size: 0.85rem;
+  font-size: 0.72rem;
   font-weight: 600;
   color: var(--gold);
   letter-spacing: 0.05em;
+  border: 1px solid var(--gold);
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background: rgba(50, 45, 41, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: background 0.3s, color 0.3s, border-color 0.3s, opacity 0.4s, transform 0.4s;
   opacity: 0;
   transform: translateY(10px);
-  transition: opacity 0.4s 0.1s, transform 0.4s 0.1s var(--ease-expo);
+  position: relative;
+  z-index: 15; /* Ensure it is clickable above other overlay elements */
+}
+.portfolio-card__cta:hover {
+  background: var(--gold);
+  color: var(--espresso);
+  border-color: var(--gold);
 }
 .portfolio-card:hover .portfolio-card__cta {
   opacity: 1; transform: translateY(0);
@@ -1132,6 +1155,7 @@ body:has(button:hover) .cursor-trail {
   position: relative;
   max-width: 900px;
   margin: 0 auto;
+  min-height: 280px;
   /* Height set by the active (position:relative) slide */
 }
 .testimonial-slide {
@@ -1154,6 +1178,7 @@ body:has(button:hover) .cursor-trail {
   opacity: 0;
   transform: translateX(-60px);
   position: absolute; /* Doesn't affect height while exiting */
+  top: 0; left: 0; right: 0;
 }
 .testimonial-card {
   position: relative;
@@ -1245,6 +1270,8 @@ body:has(button:hover) .cursor-trail {
   grid-template-rows: auto auto;
   gap: 60px 80px;
   align-items: start;
+  border-top: 1px solid transparent;
+  border-image: linear-gradient(to right, transparent, var(--gold), transparent) 1;
 }
 .contact__left {
   display: flex;
@@ -1415,6 +1442,8 @@ body:has(button:hover) .cursor-trail {
   width: 90%;
   transform: scale(0.92) translateY(20px);
   transition: transform 0.5s var(--ease-expo);
+  max-height: 90vh;
+  overflow-y: auto;
 }
 .booking-modal.open .booking-modal__content { transform: scale(1) translateY(0); }
 .booking-modal__close {
@@ -1481,6 +1510,8 @@ body:has(button:hover) .cursor-trail {
 .footer {
   background: var(--espresso);
   padding: var(--section-pad) clamp(24px, 6vw, 80px) 0;
+  border-top: 1px solid transparent;
+  border-image: linear-gradient(to right, transparent, var(--gold), transparent) 1;
 }
 .footer__grid {
   display: grid;
@@ -1552,7 +1583,23 @@ body:has(button:hover) .cursor-trail {
   align-items: center;
   gap: 12px;
 }
-.footer__qr svg { width: 56px; height: 56px; }
+.footer__qr-link {
+  display: block;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.footer__qr-img {
+  width: 56px;
+  height: 56px;
+  background: #ffffff;
+  padding: 4px;
+  border-radius: 6px;
+  display: block;
+  transition: transform 0.25s;
+}
+.footer__qr-link:hover .footer__qr-img {
+  transform: scale(1.06);
+}
 .footer__qr span { font-size: 0.75rem; color: var(--taupe); letter-spacing: 0.05em; }
 
 .footer__bottom { padding: 24px 0; }
@@ -1596,6 +1643,12 @@ body:has(button:hover) .cursor-trail {
   .process__track { grid-template-columns: 1fr 1fr; }
   .project-modal__body { grid-template-columns: 1fr; }
   .project-modal__img-wrap { max-height: 280px; }
+  .service-card__btn-wrap {
+    height: 40px;
+    opacity: 1;
+    margin-top: 20px;
+    pointer-events: auto;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1616,8 +1669,6 @@ body:has(button:hover) .cursor-trail {
   body { cursor: auto; }
   button { cursor: pointer; }
   a { cursor: pointer; }
-  /* Make macbook smaller on mobile */
-  .macbook { width: clamp(240px, 88vw, 380px); }
   .hero__headline-big { font-size: clamp(2rem, 10vw, 4rem); }
   /* Process steps full height on mobile */
   .process-step { border-left: none; border-top: 1px solid var(--silver); padding: 24px 0; }
@@ -1626,7 +1677,10 @@ body:has(button:hover) .cursor-trail {
 @media (max-width: 480px) {
   .hero__monogram { font-size: 2.5rem; }
   .booking-modal__slots { grid-template-columns: 1fr; }
-  .booking-modal__content { padding: 32px 24px; }
+  .booking-modal__content { padding: 32px 20px; }
+  .service-modal__content { padding: 32px 20px; }
+  .project-modal__content { inset: 20px; }
+  .project-modal__info { padding: 30px 20px; }
   .contact__secondary { flex-direction: column; align-items: flex-start; }
   .navbar { top: 14px; padding: 10px 18px; gap: 16px; }
   .stats-grid { grid-template-columns: 1fr; }
@@ -1640,27 +1694,7 @@ body:has(button:hover) .cursor-trail {
   background: rgba(114,56,61,0.06) !important;
 }
 
-/* Screen bloom pulse when lid opens */
-@keyframes screenBloom {
-  0%   { opacity: 0; transform: scale(0.95); }
-  40%  { opacity: 1; transform: scale(1.02); }
-  100% { opacity: 1; transform: scale(1); }
-}
-.macbook__lid.open .macbook__screen-content {
-  animation: screenBloom 1.2s 1.4s var(--ease-expo) forwards;
-  opacity: 0;
-  /* override the simple transition */
-  transition: none;
-}
 
-/* Gold glow pulse on screen logo - opacity/text-shadow based for GPU speed */
-@keyframes logoPulse {
-  0%, 100% { opacity: 0.75; text-shadow: 0 0 15px rgba(201,168,76,0.6); }
-  50%       { opacity: 1; text-shadow: 0 0 25px rgba(201,168,76,1); }
-}
-.macbook__lid.open .screen-logo {
-  animation: logoPulse 3s 2.8s ease-in-out infinite;
-}
 
 /* Subtle navbar highlight burst colour fix */
 .highlight-burst {
