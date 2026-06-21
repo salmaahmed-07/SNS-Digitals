@@ -479,10 +479,70 @@
     <div class="booking-modal__backdrop" id="bookingBackdrop"></div>
     <div class="booking-modal__content">
       <button class="booking-modal__close" id="bookingClose" aria-label="Close booking">✕</button>
-      <div class="booking-modal__inner">
+
+      <!-- Step indicator -->
+      <div class="booking-steps">
+        <div class="booking-step-dot active" id="bstep-1">
+          <span>1</span>
+          <div class="booking-step-label">Your Info</div>
+        </div>
+        <div class="booking-step-line"></div>
+        <div class="booking-step-dot" id="bstep-2">
+          <span>2</span>
+          <div class="booking-step-label">Pick a Time</div>
+        </div>
+      </div>
+
+      <!-- Step 1: Name + Phone -->
+      <div class="booking-modal__inner" id="bookingStep1">
+        <div class="booking-modal__icon">👋</div>
+        <h3 class="booking-modal__title">Let's get to know you</h3>
+        <p class="booking-modal__sub">Just a quick intro before we find you the perfect time slot.</p>
+
+        <div class="booking-field-group">
+          <label class="booking-field-label" for="booking-name">Full Name</label>
+          <input class="booking-field-input" type="text" id="booking-name" placeholder="e.g. Sarah Mohamed" autocomplete="name" />
+          <span class="booking-field-error" id="booking-name-err">Please enter your name</span>
+        </div>
+
+        <div class="booking-field-group">
+          <label class="booking-field-label" for="booking-phone">Phone Number</label>
+          <div class="booking-phone-row">
+            <select class="booking-country-select" id="booking-country" aria-label="Country code">
+              <option value="+20" data-flag="🇪🇬" selected>🇪🇬 +20</option>
+              <option value="+1"  data-flag="🇺🇸">🇺🇸 +1</option>
+              <option value="+44" data-flag="🇬🇧">🇬🇧 +44</option>
+              <option value="+971" data-flag="🇦🇪">🇦🇪 +971</option>
+              <option value="+966" data-flag="🇸🇦">🇸🇦 +966</option>
+              <option value="+974" data-flag="🇶🇦">🇶🇦 +974</option>
+              <option value="+965" data-flag="🇰🇼">🇰🇼 +965</option>
+              <option value="+962" data-flag="🇯🇴">🇯🇴 +962</option>
+              <option value="+961" data-flag="🇱🇧">🇱🇧 +961</option>
+              <option value="+213" data-flag="🇩🇿">🇩🇿 +213</option>
+              <option value="+216" data-flag="🇹🇳">🇹🇳 +216</option>
+              <option value="+212" data-flag="🇲🇦">🇲🇦 +212</option>
+              <option value="+49"  data-flag="🇩🇪">🇩🇪 +49</option>
+              <option value="+33"  data-flag="🇫🇷">🇫🇷 +33</option>
+              <option value="+39"  data-flag="🇮🇹">🇮🇹 +39</option>
+              <option value="+34"  data-flag="🇪🇸">🇪🇸 +34</option>
+              <option value="+90"  data-flag="🇹🇷">🇹🇷 +90</option>
+              <option value="+91"  data-flag="🇮🇳">🇮🇳 +91</option>
+              <option value="+86"  data-flag="🇨🇳">🇨🇳 +86</option>
+              <option value="+81"  data-flag="🇯🇵">🇯🇵 +81</option>
+            </select>
+            <input class="booking-field-input booking-phone-input" type="tel" id="booking-phone" placeholder="010 0000 0000" autocomplete="tel" />
+          </div>
+          <span class="booking-field-error" id="booking-phone-err">Please enter a valid phone number</span>
+        </div>
+
+        <button class="booking-modal__confirm" id="bookingNext">Continue →</button>
+      </div>
+
+      <!-- Step 2: Time Slot -->
+      <div class="booking-modal__inner" id="bookingStep2" style="display:none">
         <div class="booking-modal__icon">📅</div>
-        <h3 class="booking-modal__title">Book a 30-Minute Call</h3>
-        <p class="booking-modal__sub">Choose a time that works for you. We'll discuss your project goals, timeline, and how we can help.</p>
+        <h3 class="booking-modal__title">Pick a Time</h3>
+        <p class="booking-modal__sub">Choose a slot that works for you. We'll discuss your project goals, timeline, and how we can help.</p>
         <div class="booking-modal__slots">
           <button class="booking-slot" id="slot-1">Mon, Jun 16 · 10:00 AM</button>
           <button class="booking-slot" id="slot-2">Mon, Jun 16 · 2:00 PM</button>
@@ -491,8 +551,12 @@
           <button class="booking-slot" id="slot-5">Thu, Jun 19 · 9:00 AM</button>
           <button class="booking-slot" id="slot-6">Fri, Jun 20 · 1:00 PM</button>
         </div>
-        <button class="booking-modal__confirm" id="bookingConfirm">Confirm Booking →</button>
+        <div class="booking-step2-actions">
+          <button class="booking-back-btn" id="bookingBack">← Back</button>
+          <button class="booking-modal__confirm" id="bookingConfirm">Confirm Booking →</button>
+        </div>
       </div>
+
     </div>
   </div>
 
@@ -572,6 +636,423 @@
       </div>
     </div>
   </footer>
+
+  <!-- ═══════════════════════════════════════
+       DELETE CONFIRMATION MODAL
+  ═══════════════════════════════════════ -->
+  <div class="project-form-modal" id="deleteConfirmModal" aria-hidden="true" role="dialog" aria-labelledby="deleteConfirmTitle">
+    <div class="project-form-modal__backdrop" id="deleteConfirmBackdrop"></div>
+    <div class="project-form-modal__card" style="max-width: 400px; text-align: center; padding: 40px 30px;">
+      <h2 class="project-form-modal__title" id="deleteConfirmTitle" style="font-size: 1.25rem; margin-bottom: 12px; color: #fff;">Delete Project?</h2>
+      <p style="color: var(--taupe); margin-bottom: 24px; font-size: 0.95rem;">Are you sure you want to delete this project? This action cannot be undone.</p>
+      <div class="project-form__actions" style="justify-content: center; margin-top: 0;">
+        <button type="button" class="project-form__cancel" id="deleteConfirmCancel">Cancel</button>
+        <button type="button" class="project-form__submit" id="deleteConfirmYes" style="background: #e74c3c; color: white;">Yes, Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       PROJECT ADD / EDIT MODAL
+  ═══════════════════════════════════════ -->
+  <div class="project-form-modal" id="projectFormModal" aria-hidden="true" role="dialog" aria-labelledby="projectFormTitle">
+    <div class="project-form-modal__backdrop" id="projectFormBackdrop"></div>
+    <div class="project-form-modal__card">
+      <button class="project-form-modal__close" id="projectFormClose" aria-label="Close">✕</button>
+      <h2 class="project-form-modal__title" id="projectFormTitle">Add Project</h2>
+      <div class="project-form-modal__rule"></div>
+      <form class="project-form" id="projectForm" novalidate autocomplete="off">
+        <div class="project-form__row">
+          <div class="project-form__group">
+            <label class="project-form__label" for="pf-name">Project Name</label>
+            <input class="project-form__input" type="text" id="pf-name" placeholder="e.g. Redesign 2.0" required />
+          </div>
+          <div class="project-form__group">
+            <label class="project-form__label" for="pf-client">Client Name</label>
+            <input class="project-form__input" type="text" id="pf-client" placeholder="e.g. Maison Vérité" required />
+          </div>
+        </div>
+        <div class="project-form__row">
+          <div class="project-form__group">
+            <label class="project-form__label" for="pf-type">Project Type</label>
+            <select class="project-form__input project-form__select" id="pf-type" required>
+              <option value="" disabled selected>Select type...</option>
+              <option value="E-Commerce">E-Commerce</option>
+              <option value="Booking Platform">Booking Platform</option>
+              <option value="Web Design">Web Design</option>
+              <option value="Brand Identity">Brand Identity</option>
+              <option value="Other">Other</option>
+            </select>
+            <input class="project-form__input" type="text" id="pf-type-other" placeholder="Specify other type..." style="display: none; margin-top: 8px;" />
+          </div>
+          <div class="project-form__group">
+            <label class="project-form__label" for="pf-status">Status</label>
+            <select class="project-form__input project-form__select" id="pf-status" required>
+              <option value="" disabled selected>Select status...</option>
+              <option value="tostart">To Start</option>
+              <option value="live">Live</option>
+              <option value="progress">In Progress</option>
+              <option value="testing">Testing</option>
+              <option value="pending">Pending</option>
+            </select>
+          </div>
+        </div>
+        <div class="project-form__row">
+          <div class="project-form__group">
+            <label class="project-form__label" for="pf-deadline-type">Deadline</label>
+            <select class="project-form__input project-form__select" id="pf-deadline-type" required>
+              <option value="" disabled selected>Select deadline...</option>
+              <option value="date">Select a Date</option>
+              <option value="delivered">Delivered</option>
+            </select>
+            <input class="project-form__input" type="date" id="pf-deadline-date" style="display: none; margin-top: 8px;" />
+          </div>
+          <div class="project-form__group">
+            <label class="project-form__label" for="pf-budget">Budget</label>
+            <input class="project-form__input" type="text" id="pf-budget" placeholder="e.g. $15,000" required />
+          </div>
+        </div>
+        <input type="hidden" id="pf-edit-row" value="" />
+        <div class="project-form__actions">
+          <button type="button" class="project-form__cancel" id="projectFormCancel">Cancel</button>
+          <button type="submit" class="project-form__submit" id="projectFormSubmit">Save Project</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       ADMIN LOGIN MODAL
+  ═══════════════════════════════════════ -->
+  <div class="admin-modal" id="adminModal" aria-hidden="true" role="dialog" aria-labelledby="adminModalTitle">
+    <div class="admin-modal__backdrop" id="adminModalBackdrop"></div>
+    <div class="admin-modal__card">
+      <div class="admin-modal__icon">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="14" r="7" stroke="#C9A84C" stroke-width="1.8"/>
+          <path d="M6 38c0-7.732 6.268-14 14-14s14 6.268 14 14" stroke="#C9A84C" stroke-width="1.8" stroke-linecap="round"/>
+          <rect x="16" y="24" width="8" height="10" rx="2" fill="none" stroke="#C9A84C" stroke-width="1.5"/>
+          <circle cx="20" cy="29" r="1.5" fill="#C9A84C"/>
+        </svg>
+      </div>
+      <h2 class="admin-modal__title" id="adminModalTitle">Admin Access</h2>
+      <p class="admin-modal__sub">Enter your administrator password to continue.</p>
+      <div class="admin-modal__field">
+        <input
+          type="password"
+          id="adminPasswordInput"
+          class="admin-modal__input"
+          placeholder="Password"
+          autocomplete="current-password"
+          aria-label="Admin password"
+        />
+        <button class="admin-modal__toggle" id="adminTogglePassword" aria-label="Toggle password visibility" type="button">
+          <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </button>
+      </div>
+      <button class="admin-modal__submit" id="adminSubmitBtn">Submit →</button>
+      <p class="admin-modal__feedback" id="adminFeedback" aria-live="polite"></p>
+      <button class="admin-modal__close" id="adminModalClose" aria-label="Close admin login">✕</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       ADMIN DASHBOARD
+  ═══════════════════════════════════════ -->
+  <div class="admin-dashboard" id="adminDashboard" aria-hidden="true">
+    <div class="admin-dash__topbar">
+      <div class="admin-dash__brand">
+        <span class="admin-dash__brand-logo">SNS</span>
+        <span class="admin-dash__brand-label">Admin Dashboard</span>
+      </div>
+      <div class="admin-dash__topbar-right">
+        <span class="admin-dash__welcome">Welcome, Admin</span>
+        <button class="admin-dash__logout" id="adminLogout">Logout</button>
+      </div>
+    </div>
+
+    <div class="admin-dash__body">
+      <!-- Sidebar -->
+      <aside class="admin-dash__sidebar">
+        <nav class="admin-dash__nav">
+          <button class="admin-dash__nav-item active" data-section="overview" id="dash-nav-overview">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            Overview
+          </button>
+          <button class="admin-dash__nav-item" data-section="projects" id="dash-nav-projects">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+            Projects
+          </button>
+          <button class="admin-dash__nav-item" data-section="leads" id="dash-nav-leads">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+            Admins
+          </button>
+          <button class="admin-dash__nav-item" data-section="analytics" id="dash-nav-analytics">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Analytics
+          </button>
+          <button class="admin-dash__nav-item" data-section="meetings" id="dash-nav-meetings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            Meeting Requests
+            <span class="admin-nav-badge" id="meetingsBadge" aria-label="unread meeting requests"></span>
+          </button>
+          <button class="admin-dash__nav-item" data-section="settings" id="dash-nav-settings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M19.07 19.07l-1.41-1.41M4.93 19.07l1.41-1.41M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
+            Settings
+          </button>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="admin-dash__main">
+
+        <!-- Overview Section -->
+        <section class="admin-section active" id="dash-overview">
+          <h1 class="admin-section__title">Overview</h1>
+          <div class="admin-kpi-grid">
+            <div class="admin-kpi" id="kpi-revenue">
+              <div class="admin-kpi__label">Revenue (This Month)</div>
+              <div class="admin-kpi__value">$48,200</div>
+              <div class="admin-kpi__badge up">↑ 18%</div>
+            </div>
+            <div class="admin-kpi" id="kpi-projects">
+              <div class="admin-kpi__label">Active Projects</div>
+              <div class="admin-kpi__value">12</div>
+              <div class="admin-kpi__badge up">↑ 3 new</div>
+            </div>
+            <div class="admin-kpi" id="kpi-leads">
+              <div class="admin-kpi__label">New Leads</div>
+              <div class="admin-kpi__value">34</div>
+              <div class="admin-kpi__badge down">↓ 2 this week</div>
+            </div>
+            <div class="admin-kpi" id="kpi-retention">
+              <div class="admin-kpi__label">Client Retention</div>
+              <div class="admin-kpi__value">99%</div>
+              <div class="admin-kpi__badge up">↑ Excellent</div>
+            </div>
+          </div>
+
+          <div class="admin-chart-row">
+            <div class="admin-chart-card" id="chart-revenue">
+              <h3 class="admin-chart-card__title">Monthly Revenue</h3>
+              <div class="admin-bar-chart">
+                <div class="admin-bar" style="--h:55%"><span>Jan</span></div>
+                <div class="admin-bar" style="--h:70%"><span>Feb</span></div>
+                <div class="admin-bar" style="--h:60%"><span>Mar</span></div>
+                <div class="admin-bar" style="--h:80%"><span>Apr</span></div>
+                <div class="admin-bar" style="--h:65%"><span>May</span></div>
+                <div class="admin-bar active" style="--h:88%"><span>Jun</span></div>
+              </div>
+            </div>
+            <div class="admin-chart-card" id="chart-activity">
+              <h3 class="admin-chart-card__title">Recent Activity</h3>
+              <ul class="admin-activity-list">
+                <li class="admin-activity-item"><span class="admin-activity-dot green"></span>Maison Vérité — Phase 2 launched</li>
+                <li class="admin-activity-item"><span class="admin-activity-dot gold"></span>New lead: TechFlow Inc.</li>
+                <li class="admin-activity-item"><span class="admin-activity-dot gold"></span>Contract signed: Arcane Analytics</li>
+                <li class="admin-activity-item"><span class="admin-activity-dot red"></span>Invoice overdue: Ivory Tower</li>
+                <li class="admin-activity-item"><span class="admin-activity-dot green"></span>SEO audit completed for 3 clients</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="admin-section" id="dash-projects">
+          <div class="admin-section-header">
+            <h1 class="admin-section__title">Projects</h1>
+            <button class="admin-add-btn" id="addProjectBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+              Add Project
+            </button>
+          </div>
+          <div class="admin-table-wrap">
+            <table class="admin-table" id="projects-table">
+              <thead>
+                <tr>
+                  <th>Project Name</th>
+                  <th>Client</th>
+                  <th>Type</th>
+                  <th>Status</th>
+                  <th>Deadline</th>
+                  <th>Budget</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="projectsTableBody">
+                <tr>
+                  <td>Redesign 2.0</td>
+                  <td>Maison Vérité</td><td>E-Commerce</td>
+                  <td><span class="admin-badge live">Live</span></td>
+                  <td>Delivered</td><td>$32,000</td>
+                  <td>
+                    <div class="admin-actions-cell">
+                      <button class="admin-edit-btn" aria-label="Edit project" onclick="window.openEditProject(this)"><!--pencil--><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                      <button class="admin-delete-btn" aria-label="Delete project" onclick="window.deleteProject(this)"><!--trash--><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Dashboard Refresh</td>
+                  <td>Arcane Analytics</td><td>SaaS Dashboard</td>
+                  <td><span class="admin-badge progress">In Progress</span></td>
+                  <td>Jul 15</td><td>$58,000</td>
+                  <td>
+                    <div class="admin-actions-cell">
+                      <button class="admin-edit-btn" aria-label="Edit project" onclick="window.openEditProject(this)"><!--pencil--><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                      <button class="admin-delete-btn" aria-label="Delete project" onclick="window.deleteProject(this)"><!--trash--><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Reservation System</td>
+                  <td>Ivory Tower Hotel</td><td>Booking Platform</td>
+                  <td><span class="admin-badge review">In Review</span></td>
+                  <td>Jun 30</td><td>$24,000</td>
+                  <td>
+                    <div class="admin-actions-cell">
+                      <button class="admin-edit-btn" aria-label="Edit project" onclick="window.openEditProject(this)"><!--pencil--><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                      <button class="admin-delete-btn" aria-label="Delete project" onclick="window.deleteProject(this)"><!--trash--><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Corporate Website</td>
+                  <td>TechFlow Inc.</td><td>Web Design</td>
+                  <td><span class="admin-badge pending">Pending</span></td>
+                  <td>Aug 1</td><td>$15,000</td>
+                  <td>
+                    <div class="admin-actions-cell">
+                      <button class="admin-edit-btn" aria-label="Edit project" onclick="window.openEditProject(this)"><!--pencil--><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                      <button class="admin-delete-btn" aria-label="Delete project" onclick="window.deleteProject(this)"><!--trash--><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Brand Guidelines</td>
+                  <td>Lumière Cosmetics</td><td>Brand Identity</td>
+                  <td><span class="admin-badge progress">In Progress</span></td>
+                  <td>Jul 5</td><td>$12,000</td>
+                  <td>
+                    <div class="admin-actions-cell">
+                      <button class="admin-edit-btn" aria-label="Edit project" onclick="window.openEditProject(this)"><!--pencil--><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                      <button class="admin-delete-btn" aria-label="Delete project" onclick="window.deleteProject(this)"><!--trash--><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg></button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Admins Section -->
+        <section class="admin-section" id="dash-leads">
+          <div class="admin-section-header">
+            <h1 class="admin-section__title">Admins</h1>
+            <button class="admin-add-btn" id="addEmployeeBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+              Add Employee
+            </button>
+          </div>
+          <div class="admin-table-wrap">
+            <table class="admin-table" id="leads-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Company</th>
+                  <th>Service</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="leadsTableBody">
+                <tr><td>Salma Ahmed</td><td>SNS Digital</td><td>All</td><td>Jun 21</td><td><span class="admin-badge live">Owner</span></td></tr>
+                <tr><td>Norhan Hazem</td><td>SNS Digital</td><td>All</td><td>Jun 21</td><td><span class="admin-badge live">Owner</span></td></tr>
+                <tr><td>Salma Hisham</td><td>SNS Digital</td><td>All</td><td>Jun 21</td><td><span class="admin-badge live">Owner</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Meeting Requests Section -->
+        <section class="admin-section" id="dash-meetings">
+          <h1 class="admin-section__title">Meeting Requests</h1>
+
+          <!-- Tab Bar -->
+          <div class="meetings-tabs" role="tablist">
+            <button class="meetings-tab active" data-tab="inquiries" id="tab-inquiries" role="tab" aria-selected="true" aria-controls="meetings-panel-inquiries">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+              Project Inquiries
+              <span class="meetings-tab-count" id="inquiries-count">0</span>
+            </button>
+            <button class="meetings-tab" data-tab="bookings" id="tab-bookings" role="tab" aria-selected="false" aria-controls="meetings-panel-bookings">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Booked Meetings
+              <span class="meetings-tab-count" id="bookings-count">0</span>
+            </button>
+          </div>
+
+          <!-- Inquiries Panel -->
+          <div class="meetings-panel active" id="meetings-panel-inquiries" role="tabpanel" aria-labelledby="tab-inquiries">
+            <div class="meetings-empty" id="inquiries-empty">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+              <p>No project inquiries yet.<br>Submissions from the &quot;Start a Project&quot; form will appear here.</p>
+            </div>
+            <div class="meetings-list" id="inquiries-list"></div>
+          </div>
+
+          <!-- Bookings Panel -->
+          <div class="meetings-panel" id="meetings-panel-bookings" role="tabpanel" aria-labelledby="tab-bookings">
+            <div class="meetings-empty" id="bookings-empty">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <p>No booked meetings yet.<br>Meeting bookings from the &quot;Book a 30-Minute Call&quot; button will appear here.</p>
+            </div>
+            <div class="meetings-list" id="bookings-list"></div>
+          </div>
+        </section>
+
+        <!-- Analytics Section -->
+        <section class="admin-section" id="dash-analytics">
+          <h1 class="admin-section__title">Analytics</h1>
+          <div class="admin-kpi-grid">
+            <div class="admin-kpi"><div class="admin-kpi__label">Avg. Page Load</div><div class="admin-kpi__value">0.9s</div><div class="admin-kpi__badge up">↑ Fast</div></div>
+            <div class="admin-kpi"><div class="admin-kpi__label">Bounce Rate</div><div class="admin-kpi__value">24%</div><div class="admin-kpi__badge up">↓ Low</div></div>
+            <div class="admin-kpi"><div class="admin-kpi__label">Monthly Visitors</div><div class="admin-kpi__value">12.4K</div><div class="admin-kpi__badge up">↑ 22%</div></div>
+            <div class="admin-kpi"><div class="admin-kpi__label">Conversion Rate</div><div class="admin-kpi__value">4.8%</div><div class="admin-kpi__badge up">↑ 0.6%</div></div>
+          </div>
+          <p class="admin-analytics-note">Full analytics integration with Google Analytics 4 and Hotjar coming soon.</p>
+        </section>
+
+        <!-- Settings Section -->
+        <section class="admin-section" id="dash-settings">
+          <h1 class="admin-section__title">Settings</h1>
+          <div class="admin-settings-group">
+            <label class="admin-settings-label">Site Name</label>
+            <input class="admin-settings-input" type="text" value="SNS Digital" id="setting-site-name" />
+          </div>
+          <div class="admin-settings-group">
+            <label class="admin-settings-label">Contact Email</label>
+            <input class="admin-settings-input" type="email" value="hello@snsdigital.com" id="setting-email" />
+          </div>
+          <div class="admin-settings-group">
+            <label class="admin-settings-label">Change Password</label>
+            <input class="admin-settings-input" type="password" placeholder="New password" id="setting-password" />
+          </div>
+          <button class="admin-settings-save" id="settings-save-btn">Save Changes</button>
+        </section>
+
+      </main>
+    </div>
+  </div>
 
   <!-- GSAP from CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
